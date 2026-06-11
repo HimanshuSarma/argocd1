@@ -1,31 +1,31 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: mysql
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 11.1.14
-    chart: mysql
-    helm:
-      values: |
-        auth:
-          rootPassword: "rootpassword"
-          database: "mydb"
-          username: "myuser"
-          password: "mypassword"
-        primary:
-          persistence:
-            enabled: false
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: mysql
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: mysql
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://charts.bitnami.com/bitnami
+#     targetRevision: 11.1.14
+#     chart: mysql
+#     helm:
+#       values: |
+#         auth:
+#           rootPassword: "rootpassword"
+#           database: "mydb"
+#           username: "myuser"
+#           password: "mypassword"
+#         primary:
+#           persistence:
+#             enabled: false
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: mysql
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
