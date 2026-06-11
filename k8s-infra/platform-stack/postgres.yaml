@@ -8,22 +8,9 @@
 # spec:
 #   project: default
 #   source:
-#     repoURL: https://charts.bitnami.com/bitnami
-#     chart: postgresql
-#     targetRevision: 16.4.1
-#     helm:
-#       values: |
-#         global:
-#           imageRegistry: public.ecr.aws
-
-#         auth:
-#           postgresPassword: "rootpassword"
-#           database: "mydb"
-#           username: "myuser"
-#           password: "mypassword"
-#         primary:
-#           persistence:
-#             enabled: false
+#     repoURL: https://cloudnative-pg.github.io/charts
+#     chart: cloudnative-pg
+#     targetRevision: 0.23.0
 #   destination:
 #     server: https://kubernetes.default.svc
 #     namespace: postgresql
