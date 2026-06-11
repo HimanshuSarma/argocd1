@@ -52,6 +52,13 @@ resource "aws_security_group" "asg_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # ingress {
+  #   from_port   = 0
+  #   to_port     = 65535
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+
   # Allow inbound ICMP for Ping
   ingress {   
     from_port   = -1
@@ -104,7 +111,7 @@ resource "aws_launch_template" "k8s_master_node_asg_template" {
 resource "aws_launch_template" "k8s_worker_node_asg_template" {
   name   = "k8s-worker-node-asg-template"
   image_id      = data.aws_ami.ubuntu.id
-  instance_type = "t3a.medium"
+  instance_type = "t3.large"
 
   # Attach the Security Group created above
   vpc_security_group_ids = [aws_security_group.asg_sg.id]

@@ -166,5 +166,5 @@ else
     sudo kubeadm reset -f
   fi
   
-  sudo kubeadm join 172.31.87.89:6443 --token ol7a73.2uob9f9pew4bkj8g --discovery-token-ca-cert-hash sha256:$TARGET_HASH
+  sudo kubeadm join 172.31.87.89:6443 --token rwjrhs.1gi1k12w0zo0jhaw --discovery-token-ca-cert-hash sha256:$TARGET_HASH
 fi
