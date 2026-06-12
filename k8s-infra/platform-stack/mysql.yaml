@@ -19,9 +19,7 @@ spec:
         mysqlPassword: "mypassword"
         persistence:
           enabled: true
-          size: 10Gi
-          storageClass: "ebs-sc"
-          accessMode: ReadWriteOnce
+          existingClaim: "db-pvc"
   destination:
     server: https://kubernetes.default.svc
     namespace: mysql
