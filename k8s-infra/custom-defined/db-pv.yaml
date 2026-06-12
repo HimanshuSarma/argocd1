@@ -9,6 +9,7 @@ spec:
     storage: 10Gi
   volumeMode: Filesystem
   storageClassName: ""
+  persistentVolumeReclaimPolicy: Retain
   csi:
     driver: ebs.csi.aws.com
     volumeHandle: vol-047f38d19b6951ad9
