@@ -20,9 +20,30 @@ spec:
             annotations:
               # Link your specific AWS IAM Role to the service account
               eks.amazonaws.com/role-arn: "arn:aws:iam::622047409214:role/ebs"
+
+          # Force the OIDC variables directly into the driver containers
+          env:
+            - name: AWS_ROLE_ARN
+              value: "arn:aws:iam::622047409214:role/ebs"
+            - name: AWS_WEB_IDENTITY_TOKEN_FILE
+              value: "/var/run/secrets/tokens/aws-iam-token"
+          
+          # Project the tokens into the controller filesystem manually
+          extraVolumes:
+            - name: aws-iam-token
+              projected:
+                sources:
+                  - serviceAccountToken:
+                      audience: sts.amazonaws.com
+                      expirationSeconds: 86400
+                      path: aws-iam-token
+          extraVolumeMounts:
+            - name: aws-iam-token
+              mountPath: /var/run/secrets/tokens
+              readOnly: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system # Standard convention for core cluster drivers
+    namespace: kube-system # Standard convention for core cluster drivers 
   syncPolicy:
     automated:
       prune: true
