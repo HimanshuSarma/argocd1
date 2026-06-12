@@ -28,8 +28,8 @@ spec:
             - name: AWS_WEB_IDENTITY_TOKEN_FILE
               value: "/var/run/secrets/tokens/aws-iam-token"
           
-          # Project the tokens into the controller filesystem manually
-          extraVolumes:
+          # Use the exact chart schema property keys
+          volumes:
             - name: aws-iam-token
               projected:
                 sources:
@@ -37,10 +37,11 @@ spec:
                       audience: sts.amazonaws.com
                       expirationSeconds: 86400
                       path: aws-iam-token
-          extraVolumeMounts:
+          volumeMounts:
             - name: aws-iam-token
               mountPath: /var/run/secrets/tokens
               readOnly: true
+              
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system # Standard convention for core cluster drivers 
