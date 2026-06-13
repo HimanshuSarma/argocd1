@@ -31,3 +31,4 @@ spec:
       port: 30001
       nodePort: 30001
       targetPort: 8000
+---
