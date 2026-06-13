@@ -9,15 +9,14 @@ spec:
   project: default
   # Use 'sources' (plural) to combine Helm repo and your Git repo
   sources:
-    # 1. The Helm Chart
     - repoURL: https://charts.helm.sh/stable
       chart: mysql
       targetRevision: 1.6.9
       helm:
         valueFiles:
-          - $values/helm-config/values.yaml
+          # If 'resources' is the root, just point to the folder inside it
+          - $values/helm-config/values.yaml 
     
-    # 2. Your custom infrastructure (PV/PVC)
     - repoURL: https://github.com/HimanshuSarma/argocd1.git
       targetRevision: HEAD
       ref: values
