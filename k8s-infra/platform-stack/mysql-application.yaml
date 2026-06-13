@@ -23,7 +23,7 @@ spec:
       targetRevision: HEAD
       ref: values
       # Point to the root of the repo
-      path: .
+      path: k8s-infra/platform-stack/mysql
       
   destination:
     server: https://kubernetes.default.svc
