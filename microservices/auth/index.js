@@ -7,7 +7,7 @@ const port = 8000;
 app.use(cors()); // Defaults to origin: '*'
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World v4!');
 });
 
 app.listen(port, () => {

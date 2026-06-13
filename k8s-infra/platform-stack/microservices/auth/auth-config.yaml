@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: auth
-        image: index.docker.io/himanshusarma123/auth:v3
+        image: index.docker.io/himanshusarma123/auth:v4
 ---
 apiVersion: v1
 kind: Service
