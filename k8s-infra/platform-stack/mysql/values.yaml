@@ -30,3 +30,28 @@
 #     syncOptions:
 #       - CreateNamespace=true
 #       - ServerSideApply=true
+##############################################################
+# Credentials for the MySQL instance
+mysqlRootPassword: "rootpassword"
+mysqlDatabase: "mydb"
+mysqlUser: "myuser"
+mysqlPassword: "mypassword"
+
+# Storage configuration
+persistence:
+  enabled: true
+  # 'existingClaim' tells the Helm chart to use the PVC you define 
+  # manually in your Git repo instead of creating a new one.
+  existingClaim: "db-pvc" 
+
+# If your custom PVC does not use a StorageClass, ensure this is set to empty
+storageClass: ""
+
+# Optional: resource requests and limits for the pod
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
