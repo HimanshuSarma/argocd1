@@ -1,27 +1,27 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: auth-microservice
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: default
-  # Use 'sources' (plural) to combine Helm repo and your Git repo
-  sources:
-    - repoURL: https://github.com/HimanshuSarma/argocd1.git
-      targetRevision: HEAD
-      ref: values
-      # Point to the root of the repo
-      path: k8s-infra/platform-stack/microservices/auth
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: auth-microservice
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: default
+#   # Use 'sources' (plural) to combine Helm repo and your Git repo
+#   sources:
+#     - repoURL: https://github.com/HimanshuSarma/argocd1.git
+#       targetRevision: HEAD
+#       ref: values
+#       # Point to the root of the repo
+#       path: k8s-infra/platform-stack/microservices/auth
       
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: auth
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: auth
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
