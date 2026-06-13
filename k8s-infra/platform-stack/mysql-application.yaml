@@ -9,18 +9,21 @@ spec:
   project: default
   # Use 'sources' (plural) to combine Helm repo and your Git repo
   sources:
+    # 1. The Helm Chart
     - repoURL: https://charts.helm.sh/stable
       chart: mysql
       targetRevision: 1.6.9
       helm:
         valueFiles:
-          # If 'resources' is the root, just point to the folder inside it
-          - $values/helm-config/values.yaml 
+          # Now it can see 'resources' and then 'helm-config'
+          - $values/helm-config/values.yaml
     
+    # 2. Your custom infrastructure
     - repoURL: https://github.com/HimanshuSarma/argocd1.git
       targetRevision: HEAD
       ref: values
-      path: k8s-infra/platform-stack/mysql/resources
+      # Point to the parent directory
+      path: k8s-infra/platform-stack/mysql
       
   destination:
     server: https://kubernetes.default.svc
