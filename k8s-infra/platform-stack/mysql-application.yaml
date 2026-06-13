@@ -15,7 +15,7 @@ spec:
       targetRevision: 1.6.9
       helm:
         valueFiles:
-          - $values/values.yaml # References the file from the repo below
+          - values.yaml # Try removing the $values/ prefix entirely
     
     # Source 2: Your Git Repo (configuration)
     - repoURL: https://github.com/HimanshuSarma/argocd1.git
