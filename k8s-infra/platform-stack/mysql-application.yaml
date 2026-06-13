@@ -15,8 +15,7 @@ spec:
       targetRevision: 1.6.9
       helm:
         valueFiles:
-          # Now it can see 'resources' and then 'helm-config'
-          - $values/helm-config/values.yaml
+          - $values/DEBUG_ME_HERE/values.yaml
     
     # 2. Your custom infrastructure
     - repoURL: https://github.com/HimanshuSarma/argocd1.git
