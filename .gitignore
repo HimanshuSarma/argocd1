@@ -3,3 +3,4 @@
 /terraform/terraform.tfstate
 /terraform/terraform.tfstate.backup
 /terraform/*.tfvars
+**/node_modules/
