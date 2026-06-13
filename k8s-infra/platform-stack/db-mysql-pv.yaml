@@ -1,15 +1,15 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: db-pv
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   capacity:
-#     storage: 10Gi
-#   volumeMode: Filesystem
-#   storageClassName: ""
-#   persistentVolumeReclaimPolicy: Retain
-#   csi:
-#     driver: ebs.csi.aws.com
-#     volumeHandle: vol-0d38aace0f3247186
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-0d38aace0f3247186
