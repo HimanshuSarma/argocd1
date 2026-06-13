@@ -13,7 +13,7 @@ spec:
       targetRevision: HEAD
       ref: values
       # Point to the root of the repo
-      path: k8s-infra/platform-stack/microservices/auth.yaml
+      path: k8s-infra/platform-stack/microservices/auth
       
   destination:
     server: https://kubernetes.default.svc
