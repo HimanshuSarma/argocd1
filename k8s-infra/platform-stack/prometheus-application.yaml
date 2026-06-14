@@ -16,7 +16,7 @@ spec:
         # Enable all major components
         grafana:
           enabled: true
-          adminPassword: "admin123"
+          adminPassword: "admin"
           persistence:
             enabled: true
             storageClassName: "ebs-gp3"
