@@ -119,6 +119,15 @@ resource "aws_launch_template" "k8s_worker_node_asg_template" {
   # SSH Key pair name already registered in your AWS Console
   key_name = "ec2"
 
+  block_device_mappings {
+    device_name = "/dev/sda1"
+    ebs {
+      volume_size           = 30
+      volume_type           = "gp3"
+      delete_on_termination = true
+    }
+  }
+
   lifecycle {
     create_before_destroy = true
   }
