@@ -23,12 +23,11 @@ metadata:
   name: service2-svc
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: service2
   ports:
     - protocol: TCP
-      port: 30002
-      nodePort: 30002
+      port: 8000
       targetPort: 8000
 ---
