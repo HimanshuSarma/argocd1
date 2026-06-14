@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Use the official Jetstack repository
+    repoURL: https://charts.jetstack.io
+    chart: cert-manager
+    targetRevision: v1.14.5 # Use a stable version compatible with your cluster
+    helm:
+      values: |
+        # CRDs must be enabled for cert-manager to function
+        installCRDs: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
