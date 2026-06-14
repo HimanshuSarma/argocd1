@@ -17,3 +17,13 @@ spec:
             name: monitoring-stack-grafana
             port:
               number: 80
+  - host: monitoringalertmanagerhimanshu324.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: monitoring-stack-kube-prom-alertmanager
+            port:
+              number: 9093
