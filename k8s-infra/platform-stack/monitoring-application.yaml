@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-stack
+  name: monitoring-stack-objects
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -17,16 +17,6 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-  # Critical for kube-prometheus-stack to avoid sync loops with generated webhooks
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      jsonPointers:
-        - /webhooks
-    - group: admissionregistration.k8s.io
-      kind: MutatingWebhookConfiguration
-      jsonPointers:
-        - /webhooks
   syncPolicy:
     automated:
       prune: true
