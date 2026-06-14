@@ -1,36 +1,40 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: pma-application
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: default
-  source:
-    # 1. Bitnami Helm Chart for phpMyAdmin
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: phpmyadmin
-    targetRevision: 15.0.0 # Pin to a specific version
-    helm:
-      values: |
-        # Connect to your internal MySQL Service
-        mysql:
-          enabled: false
-        existingSecret:
-          enabled: false
-        # Pointing to your specific Service
-        env:
-          PMA_HOST: mysql-application
-          PMA_PORT: "3306"
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: pma-application
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: default
+#   source:
+#     # 1. TrueCharts Helm Chart for phpMyAdmin
+#     repoURL: https://truecharts.org
+#     chart: phpmyadmin
+#     targetRevision: 15.0.0 # Check TrueCharts for the latest version
+#     helm:
+#       values: |
+#         # Configuration for TrueCharts version
+#         # TrueCharts handles database connections differently
+#         db:
+#           mysql:
+#             enabled: false
+#             # You may need to provide the host/port in the way their chart expects
+#             host: mysql-application
+#             port: 3306
+        
+#         # Standard env overrides if needed
+#         env:
+#           PMA_HOST: mysql-application
+#           PMA_PORT: "3306"
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: mysql
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: mysql
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
