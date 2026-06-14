@@ -8,46 +8,40 @@ metadata:
 spec:
   project: default
   source:
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      chart: kube-prometheus-stack
-      targetRevision: 86.2.3
-      helm:
-        values: |
-          # Enable all major components
-          grafana:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 86.2.3
+    helm:
+      values: |
+        # Enable all major components
+        grafana:
+          enabled: true
+          adminPassword: "admin"
+          persistence:
             enabled: true
-            adminPassword: "admin"
-            persistence:
-              enabled: true
-              storageClassName: "ebs-gp3"
-              size: 10Gi
-          prometheus:
-            prometheusSpec:
-              storageSpec:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: "ebs-gp3"
-                    resources:
-                      requests:
-                        storage: 10Gi
-              # Important: Allows Prometheus Operator to see your custom rules
-              ruleSelectorNilUsesHelmValues: false
-              serviceMonitorSelectorNilUsesHelmValues: false
-          alertmanager:
-            alertmanagerSpec:
-              storage:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: "ebs-gp3"
-                    resources:
-                      requests:
-                        storage: 10Gi
-    - repoURL: https://github.com/HimanshuSarma/argocd1.git
-      targetRevision: HEAD
-      ref: values
-      # Point to the root of the repo
-      path: k8s-infra/platform-stack/monitoring
-      
+            storageClassName: "ebs-gp3"
+            size: 10Gi
+        prometheus:
+          prometheusSpec:
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: "ebs-gp3"
+                  resources:
+                    requests:
+                      storage: 10Gi
+            # Important: Allows Prometheus Operator to see your custom rules
+            ruleSelectorNilUsesHelmValues: false
+            serviceMonitorSelectorNilUsesHelmValues: false
+        alertmanager:
+          alertmanagerSpec:
+            storage:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: "ebs-gp3"
+                  resources:
+                    requests:
+                      storage: 10Gi
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
