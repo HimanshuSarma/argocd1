@@ -12,6 +12,13 @@ spec:
     metadata:
       labels:
         app: auth
+      annotations:
+        # This tells Prometheus to scrape this pod
+        prometheus.io/scrape: "true"
+        # The port your application code exposes the /metrics endpoint on
+        prometheus.io/port: "8000" 
+        # The path where your app serves metrics
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: auth
