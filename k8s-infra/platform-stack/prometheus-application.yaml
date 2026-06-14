@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
-    targetRevision: 68.4.1 # Check Artifact Hub for the latest version
+    targetRevision: 86.2.3
     helm:
       values: |
         # Enable all major components
