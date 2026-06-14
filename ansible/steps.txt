@@ -152,7 +152,7 @@ sudo sysctl --system
 # enable kubelet
 sudo systemctl enable --now kubelet
 
-TARGET_HASH="97e538a10e69b215bbe609acb9cbb9b611a01430be1fbc0041d1e7fd2079eb35"
+TARGET_HASH="89fd1eedd1c46c298d782b7b26f2c85e50ca0fe37c0f677e01250277de882229"
 LOCAL_CA="/etc/kubernetes/pki/ca.crt"
 
 # Check if the file exists and its hash matches your target cluster
@@ -166,5 +166,5 @@ else
     sudo kubeadm reset -f
   fi
   
-  sudo kubeadm join 172.31.87.89:6443 --token rwjrhs.1gi1k12w0zo0jhaw --discovery-token-ca-cert-hash sha256:$TARGET_HASH
+  sudo kubeadm join 172.31.87.201:6443 --token gr4q6w.mane42to7fb96x28 --discovery-token-ca-cert-hash sha256:$TARGET_HASH
 fi
