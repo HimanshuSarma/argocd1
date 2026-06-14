@@ -5,15 +5,30 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
+  sources:
     # Use the official Jetstack repository
-    repoURL: https://charts.jetstack.io
-    chart: cert-manager
-    targetRevision: v1.14.5 # Use a stable version compatible with your cluster
-    helm:
-      values: |
-        # CRDs must be enabled for cert-manager to function
-        installCRDs: true
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: v1.14.5 # Use a stable version compatible with your cluster
+      helm:
+        values: |
+          # CRDs must be enabled for cert-manager to function
+          installCRDs: true
+    - repoURL: https://ebrianne.github.io/helm-charts
+      chart: cert-manager-webhook-duckdns
+      targetRevision: 1.2.4 # Use the latest version
+      helm:
+        values: |
+          # You can set your values directly here or reference them from Source 2
+          duckdns:
+            token: "bd22d016-910a-469b-bc7c-a9ecf9bc457c" 
+          certManager:
+            namespace: cert-manager
+    - repoURL: https://github.com/HimanshuSarma/argocd1.git
+      targetRevision: HEAD
+      ref: values
+      # Point to the root of the repo
+      path: k8s-infra/platform-stack/cert-management
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
