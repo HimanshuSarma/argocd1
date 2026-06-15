@@ -42,6 +42,15 @@ spec:
                   resources:
                     requests:
                       storage: 10Gi
+          config:
+            route:
+              group_by: ['alertname']
+              group_wait: 10s
+              group_interval: 10s
+              repeat_interval: 30s
+              receiver: 'null-receiver'
+            receivers:
+            - name: 'null-receiver'
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
