@@ -1,25 +1,3 @@
-# apiVersion: monitoring.coreos.com/v1
-# kind: PrometheusRule
-# metadata:
-#   name: backend-request-alerts
-#   namespace: monitoring
-#   labels:
-#     # This matching label ensures the operator discovers the rule
-#     release: monitoring-stack
-# spec:
-#   groups:
-#   - name: BackendTrafficAlerts
-#     rules:
-#     - alert: HighRequestRate
-#       # PromQL calculates rate per second, so we multiply by 10 to get the 10s total
-#       expr: rate(http_requests_total[10s]) * 10 > 5
-#       for: 10s
-#       labels:
-#         severity: warning
-#       annotations:
-#         summary: "High request rate on backend"
-#         description: "Backend service is receiving {{ $value }} requests per 10 seconds."
----
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
