@@ -26,18 +26,16 @@ metadata:
   name: backend-memory-alerts
   namespace: monitoring
   labels:
-    # CRITICAL: This allows the Prometheus Operator to find and load the rule
     release: monitoring-stack
 spec:
   groups:
   - name: BackendResourceAlerts
     rules:
     - alert: AuthMemoryHigh
-      # Condition is instantly TRUE because 28,803,072 bytes (current) > 10,485,760 bytes (10Mi)
       expr: container_memory_working_set_bytes{container="auth", namespace="default"} > 10485760
-      for: 0s # Bypasses 'PENDING' state completely. Fires IMMEDIATELY on the next evaluation.
+      for: 0s
       labels:
         severity: critical
       annotations:
         summary: "High memory usage detected on auth container"
-        description: "The auth container in namespace 'default' is using {{ $value | humanizeBytes }} of memory, exceeding the 10Mi limit."
+        description: "The auth container in namespace 'default' has exceeded the 10Mi memory limit. Current value: {{ $value }} bytes."
