@@ -22,6 +22,9 @@ spec:
             storageClassName: "ebs-gp3"
             size: 10Gi
         prometheus:
+          ruleSelectorNilUsesHelmValues: false
+          serviceMonitorSelectorNilUsesHelmValues: false
+          
           prometheusSpec:
             storageSpec:
               volumeClaimTemplate:
@@ -30,9 +33,6 @@ spec:
                   resources:
                     requests:
                       storage: 10Gi
-            # Important: Allows Prometheus Operator to see your custom rules
-            ruleSelectorNilUsesHelmValues: false
-            serviceMonitorSelectorNilUsesHelmValues: false
         alertmanager:
           alertmanagerSpec:
             storage:
