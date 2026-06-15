@@ -20,22 +20,22 @@ spec:
         summary: "High request rate on backend"
         description: "Backend service is receiving {{ $value }} requests per 10 seconds."
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
-metadata:
-  name: backend-memory-alerts
-  namespace: monitoring
-  labels:
-    release: monitoring-stack
-spec:
-  groups:
-  - name: BackendResourceAlerts
-    rules:
-    - alert: AuthMemoryHigh
-      expr: container_memory_working_set_bytes{container="auth", namespace="default"} > 10485760
-      for: 0s
-      labels:
-        severity: critical
-      annotations:
-        summary: "High memory usage detected on auth container"
-        description: "The auth container in namespace 'default' has exceeded the 10Mi memory limit. Current value: {{ $value }} bytes."
+# apiVersion: monitoring.coreos.com/v1
+# kind: PrometheusRule
+# metadata:
+#   name: backend-memory-alerts
+#   namespace: monitoring
+#   labels:
+#     release: monitoring-stack
+# spec:
+#   groups:
+#   - name: BackendResourceAlerts
+#     rules:
+#     - alert: AuthMemoryHigh
+#       expr: container_memory_working_set_bytes{container="auth", namespace="default"} > 10485760
+#       for: 0s
+#       labels:
+#         severity: critical
+#       annotations:
+#         summary: "High memory usage detected on auth container"
+#         description: "The auth container in namespace 'default' has exceeded the 10Mi memory limit. Current value: {{ $value }} bytes."
