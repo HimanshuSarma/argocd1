@@ -11,7 +11,7 @@ spec:
     rules:
     - alert: AuthMemoryHigh
       expr: container_memory_working_set_bytes{container="auth", namespace="default"} > 10485760
-      for: 0s
+      for: 30s
       labels:
         severity: critical
       annotations:
