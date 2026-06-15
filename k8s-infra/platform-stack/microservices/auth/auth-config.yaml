@@ -46,6 +46,8 @@ kind: Service
 metadata:
   name: auth-svc
   namespace: default
+  labels:
+    app: auth
 spec:
   type: ClusterIP
   selector:
