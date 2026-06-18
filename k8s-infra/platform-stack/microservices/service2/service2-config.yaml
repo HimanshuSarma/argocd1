@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: service2
-        image: index.docker.io/himanshusarma123/service2:v1
+        image: index.docker.io/himanshusarma123/service2:v2
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
