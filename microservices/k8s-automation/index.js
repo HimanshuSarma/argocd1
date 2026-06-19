@@ -20,14 +20,23 @@ app.get('/list-pods', async (req, res) => {
   try {
     // Attempt to get pods from all namespaces
     const response = await k8sApi.listPodForAllNamespaces();
-    const podNames = response.body.items.map(pod => pod.metadata.name);
+    
+    // FIX: The items array is directly on the response or response.body depending on version structure
+    // Let's use a safe check that works for both styles:
+    const items = response.items || (response.body && response.body.items);
+    
+    if (!items) {
+      return res.status(500).json({ success: false, message: "Unexpected API response structure", raw: response });
+    }
+
+    const podNames = items.map(pod => pod.metadata.name);
     res.json({ success: true, pods: podNames });
   } catch (error) {
     // Capture and return the RBAC failure details
     res.status(error.statusCode || 500).json({
       success: false,
       message: error.message,
-      body: error.body
+      body: error.body || error
     });
   }
 });
