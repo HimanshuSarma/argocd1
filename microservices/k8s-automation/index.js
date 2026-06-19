@@ -1,0 +1,44 @@
+const express = require('express');
+const cors = require('cors');
+const promClient = require('prom-client');
+const k8s = require('@kubernetes/client-node');
+
+const kc = new k8s.KubeConfig();
+kc.loadFromCluster();
+const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+
+const app = express();
+const port = 8000;
+
+app.use(cors()); // Defaults to origin: '*'
+
+app.get('/', (req, res) => {
+  res.send('k8s-automation v1!');
+});
+
+app.get('/list-pods', async (req, res) => {
+  try {
+    // Attempt to get pods from all namespaces
+    const response = await k8sApi.listPodForAllNamespaces();
+    const podNames = response.body.items.map(pod => pod.metadata.name);
+    res.json({ success: true, pods: podNames });
+  } catch (error) {
+    // Capture and return the RBAC failure details
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message,
+      body: error.body
+    });
+  }
+});
+
+const register = new promClient.Registry();
+promClient.collectDefaultMetrics({ register });
+app.get('/metrics', async (req, res) => {
+  res.setHeader('Content-Type', register.contentType);
+  res.send(await register.metrics());
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
