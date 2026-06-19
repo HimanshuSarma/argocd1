@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const promClient = require('prom-client');
-const k8s = require('@kubernetes/client-node');
+import express from 'express';
+import cors from 'cors';
+import promClient from 'prom-client';
+import k8s from '@kubernetes/client-node';
 
 const kc = new k8s.KubeConfig();
 kc.loadFromCluster();

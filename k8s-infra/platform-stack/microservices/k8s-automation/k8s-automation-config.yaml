@@ -16,7 +16,7 @@ spec:
       serviceAccountName: k8s-automation-sa
       containers:
       - name: k8s-automation
-        image: index.docker.io/himanshusarma123/k8sautomation:v1
+        image: index.docker.io/himanshusarma123/k8sautomation:v2
         ports:
         - containerPort: 8000
 ---
