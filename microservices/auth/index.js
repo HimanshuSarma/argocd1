@@ -19,7 +19,9 @@ app.get('/metrics', async (req, res) => {
 });
 
 app.get('/healthz/readiness', (req, res) => {
-  res.status(200).send('pod is healthy');
+  setTimeout(() => {
+    res.status(200).send('pod is healthy');
+  }, 10000);
 });
 
 app.listen(port, () => {
