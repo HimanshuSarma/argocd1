@@ -42,6 +42,20 @@ app.get('/cause-oom', (req, res) => {
   }, 50);
 });
 
+
+app.get('/cause-cpu-spike', (req, res) => {
+  res.send('Starting heavy CPU calculation loops...');
+  console.log('--- CRITICAL: Initiating heavy CPU processing loop ---');
+  
+  const startTime = Date.now();
+  // Loop intensely for 15 seconds to simulate high computational strain
+  while (Date.now() - startTime < 15000) {
+    Math.random() * Math.random(); 
+  }
+  
+  console.log('--- CPU processing loop complete ---');
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
