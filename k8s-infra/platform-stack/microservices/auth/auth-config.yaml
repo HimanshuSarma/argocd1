@@ -56,7 +56,6 @@ spec:
       - name: log-wiper-sidecar
         image: alpine:latest
         command: ["/bin/sh", "-c"]
-        # We find any file named 0.log inside our mounted directory and truncate it to 0 bytes every 5 seconds
         args:
         - |
           while true; do
