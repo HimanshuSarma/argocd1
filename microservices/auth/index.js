@@ -8,6 +8,7 @@ const port = 8000;
 app.use(cors()); // Defaults to origin: '*'
 
 app.get('/', (req, res) => {
+  console.log(`auth microservice`);
   res.send('Hello World v4!');
 });
 

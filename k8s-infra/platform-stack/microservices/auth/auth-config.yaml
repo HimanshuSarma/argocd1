@@ -28,7 +28,7 @@ spec:
       shareProcessNamespace: true
       containers:
       - name: auth
-        image: index.docker.io/himanshusarma123/auth:v11
+        image: index.docker.io/himanshusarma123/auth:v12
         ports:
         - containerPort: 8000
         resources:
