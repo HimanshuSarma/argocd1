@@ -35,16 +35,16 @@ spec:
           httpGet:
             path: /       # A lightweight endpoint to see if the process is responsive
             port: 8000
-          initialDelaySeconds: 2  # Give the app 5 seconds to boot up before checking
+          initialDelaySeconds: 5  # Give the app 5 seconds to boot up before checking
           periodSeconds: 10       # Check every 10 seconds
 
         readinessProbe:
           httpGet:
             path: /healthz/readiness # Hit an endpoint that confirms your internal dependencies/RBAC work
             port: 8000
-          initialDelaySeconds: 2  # Start checking 5 seconds after boot
+          initialDelaySeconds: 5  # Start checking 5 seconds after boot
           periodSeconds: 10       # Check every 10 seconds
-          failureThreshold: 3
+          failureThreshold: 5
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
