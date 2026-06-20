@@ -25,6 +25,7 @@ spec:
         # The path where your app serves metrics
         prometheus.io/path: "/metrics"
     spec:
+      shareProcessNamespace: true
       containers:
       - name: auth
         image: index.docker.io/himanshusarma123/auth:v11
@@ -52,6 +53,20 @@ spec:
           initialDelaySeconds: 5  # Start checking 5 seconds after boot
           periodSeconds: 10       # Check every 10 seconds
           failureThreshold: 5
+      - name: terminal-clearer-sidecar
+        image: alpine:latest
+        # This loops every 5 seconds, sends the clear screen ANSI codes directly to standard out of process 1 (the main node/express app)
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          while true; do
+            echo "Sidecar executing terminal wipe..."
+            # In a shared namespace, we can broadcast a clear command or interact with stdout if TTY is open, 
+            # or simply log a giant wall of empty space to clear the scrolling buffer!
+            printf "\033c" > /proc/1/fd/1 2>/dev/null || true
+            echo "\n\n\n=== TERMINAL CLEARED BY SIDECAR ===\n\n\n" > /proc/1/fd/1 2>/dev/null || true
+            sleep 5
+          done
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
