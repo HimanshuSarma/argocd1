@@ -14,8 +14,8 @@ spec:
         pathType: Prefix
         backend:
           service:
-            # name: auth-svc
-            name: k8s-automation-svc
+            name: auth-svc
+            # name: k8s-automation-svc
             port:
               number: 8000
   - host: service2himanshu324.duckdns.org
