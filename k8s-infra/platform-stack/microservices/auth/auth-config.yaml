@@ -30,6 +30,13 @@ spec:
         image: index.docker.io/himanshusarma123/auth:v10
         ports:
         - containerPort: 8000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"  # The container will immediately get terminated if it crosses this
+            cpu: "200m"
 
         livenessProbe:
           httpGet:
