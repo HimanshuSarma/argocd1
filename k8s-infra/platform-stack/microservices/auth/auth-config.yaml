@@ -53,20 +53,23 @@ spec:
           initialDelaySeconds: 5  # Start checking 5 seconds after boot
           periodSeconds: 10       # Check every 10 seconds
           failureThreshold: 5
-      - name: terminal-clearer-sidecar
+      - name: log-wiper-sidecar
         image: alpine:latest
-        # This loops every 5 seconds, sends the clear screen ANSI codes directly to standard out of process 1 (the main node/express app)
         command: ["/bin/sh", "-c"]
+        # We find any file named 0.log inside our mounted directory and truncate it to 0 bytes every 5 seconds
         args:
         - |
           while true; do
-            echo "Sidecar executing terminal wipe..."
-            # In a shared namespace, we can broadcast a clear command or interact with stdout if TTY is open, 
-            # or simply log a giant wall of empty space to clear the scrolling buffer!
-            printf "\033c" > /proc/1/fd/1 2>/dev/null || true
-            echo "\n\n\n=== TERMINAL CLEARED BY SIDECAR ===\n\n\n" > /proc/1/fd/1 2>/dev/null || true
+            echo "Searching and destroying log files..."
+            # Find the log file belonging to the auth container in this pod and truncate it
+            find /kubernetes-logs/ -name "0.log" -exec truncate -s 0 {} \; 2>/dev/null || true
+            echo "--- LOCAL LOG FILE TRUNCATED BY SIDECAR ---"
             sleep 5
           done
+        volumeMounts:
+        # 2. Map the host path into the sidecar container
+        - name: host-log-dir
+          mountPath: /kubernetes-logs
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
