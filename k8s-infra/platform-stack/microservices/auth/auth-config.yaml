@@ -1,82 +1,82 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: auth
-  namespace: default
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: auth
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: "25%"
-  template:
-    metadata:
-      labels:
-        app: auth
-      annotations:
-        # This tells Prometheus to scrape this pod
-        prometheus.io/scrape: "true"
-        # The port your application code exposes the /metrics endpoint on
-        prometheus.io/port: "8000" 
-        # The path where your app serves metrics
-        prometheus.io/path: "/metrics"
-    spec:
-      containers:
-      - name: auth
-        image: index.docker.io/himanshusarma123/auth:v5
-        ports:
-        - containerPort: 8000
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: auth
+#   namespace: default
+# spec:
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: auth
+#   strategy:
+#     type: RollingUpdate
+#     rollingUpdate:
+#       maxUnavailable: 0
+#       maxSurge: "25%"
+#   template:
+#     metadata:
+#       labels:
+#         app: auth
+#       annotations:
+#         # This tells Prometheus to scrape this pod
+#         prometheus.io/scrape: "true"
+#         # The port your application code exposes the /metrics endpoint on
+#         prometheus.io/port: "8000" 
+#         # The path where your app serves metrics
+#         prometheus.io/path: "/metrics"
+#     spec:
+#       containers:
+#       - name: auth
+#         image: index.docker.io/himanshusarma123/auth:v5
+#         ports:
+#         - containerPort: 8000
 
-        livenessProbe:
-          httpGet:
-            path: /       # A lightweight endpoint to see if the process is responsive
-            port: 8000
-          initialDelaySeconds: 2  # Give the app 5 seconds to boot up before checking
-          periodSeconds: 10       # Check every 10 seconds
+#         livenessProbe:
+#           httpGet:
+#             path: /       # A lightweight endpoint to see if the process is responsive
+#             port: 8000
+#           initialDelaySeconds: 2  # Give the app 5 seconds to boot up before checking
+#           periodSeconds: 10       # Check every 10 seconds
 
-        readinessProbe:
-          httpGet:
-            path: /healthz/readiness # Hit an endpoint that confirms your internal dependencies/RBAC work
-            port: 8000
-          initialDelaySeconds: 2  # Start checking 5 seconds after boot
-          periodSeconds: 10       # Check every 10 seconds
-          failureThreshold: 3
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: auth-service-monitor
-  namespace: default          # Keep it in the same namespace as your app
-  labels:
-    # CRITICAL: This label MUST match the release name of your prometheus stack
-    release: monitoring-stack
-spec:
-  selector:
-    matchLabels:
-      app: auth
-  endpoints:
-  - port: http                
-    path: /metrics            
-    interval: 10s             
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-svc
-  namespace: default
-  labels:
-    app: auth
-spec:
-  type: ClusterIP
-  selector:
-    app: auth
-  ports:
-    - name: http
-      protocol: TCP
-      port: 8000
-      targetPort: 8000
----
+#         readinessProbe:
+#           httpGet:
+#             path: /healthz/readiness # Hit an endpoint that confirms your internal dependencies/RBAC work
+#             port: 8000
+#           initialDelaySeconds: 2  # Start checking 5 seconds after boot
+#           periodSeconds: 10       # Check every 10 seconds
+#           failureThreshold: 3
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: auth-service-monitor
+#   namespace: default          # Keep it in the same namespace as your app
+#   labels:
+#     # CRITICAL: This label MUST match the release name of your prometheus stack
+#     release: monitoring-stack
+# spec:
+#   selector:
+#     matchLabels:
+#       app: auth
+#   endpoints:
+#   - port: http                
+#     path: /metrics            
+#     interval: 10s             
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: auth-svc
+#   namespace: default
+#   labels:
+#     app: auth
+# spec:
+#   type: ClusterIP
+#   selector:
+#     app: auth
+#   ports:
+#     - name: http
+#       protocol: TCP
+#       port: 8000
+#       targetPort: 8000
+# ---

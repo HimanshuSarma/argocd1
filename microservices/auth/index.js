@@ -18,6 +18,10 @@ app.get('/metrics', async (req, res) => {
   res.send(await register.metrics());
 });
 
+app.get('/healthz/readiness', (req, res) => {
+  res.status(200).send('pod is healthy');
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
