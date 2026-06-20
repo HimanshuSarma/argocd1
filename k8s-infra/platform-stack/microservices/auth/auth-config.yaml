@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: auth
-        image: index.docker.io/himanshusarma123/auth:v8
+        image: index.docker.io/himanshusarma123/auth:v9
         ports:
         - containerPort: 8000
 
