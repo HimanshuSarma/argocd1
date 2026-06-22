@@ -79,8 +79,8 @@
         activeService: auth-prod-svc
         previewService: auth-staging-svc
         autoPromotionEnabled: false
-        scaleDownDelaySeconds: 0
-        previewReplicaCount: 3
+        scaleDownDelaySeconds: 30
+        previewReplicaCount: 1
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
