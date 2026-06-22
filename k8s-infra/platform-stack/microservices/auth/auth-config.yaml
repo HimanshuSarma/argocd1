@@ -72,7 +72,7 @@
         - name: auth
           image: index.docker.io/himanshusarma123/auth:v16
           ports:
-          - containerPort: 8080
+          - containerPort: 8000
     strategy:
       blueGreen: 
         activeService: auth-prod-svc
