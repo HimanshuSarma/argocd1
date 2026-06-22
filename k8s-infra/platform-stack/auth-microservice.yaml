@@ -12,6 +12,11 @@ spec:
     repoURL: https://github.com/HimanshuSarma/argocd1.git
     targetRevision: HEAD
     path: k8s-infra/platform-stack/microservices/auth
+  ignoreDifferences:
+  - group: ""
+    kind: Service
+    jsonPointers:
+    - /spec/selector/rollouts-pod-template-hash
       
   destination:
     server: https://kubernetes.default.svc
