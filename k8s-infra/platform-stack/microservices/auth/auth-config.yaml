@@ -54,30 +54,32 @@
 #           periodSeconds: 10       # Check every 10 seconds
 #           failureThreshold: 5
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: auth-rollout
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: auth
-  template:
-    metadata:
-      labels:
+  apiVersion: argoproj.io/v1alpha1
+  kind: Rollout
+  metadata:
+    name: auth-rollout
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
         app: auth
-    spec:
-      containers:
-      - name: auth
-        image: index.docker.io/himanshusarma123/auth:v13
-        ports:
-        - containerPort: 8080
-  strategy:
-    blueGreen: 
-      activeService: auth-prod-svc
-      previewService: auth-staging-svc
-      autoPromotionEnabled: false
+    template:
+      metadata:
+        labels:
+          app: auth
+      spec:
+        containers:
+        - name: auth
+          image: index.docker.io/himanshusarma123/auth:v14
+          ports:
+          - containerPort: 8080
+    strategy:
+      blueGreen: 
+        activeService: auth-prod-svc
+        previewService: auth-staging-svc
+        autoPromotionEnabled: false
+        scaleDownDelaySeconds: 0
+        previewReplicaCount: 3
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
