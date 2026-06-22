@@ -9,7 +9,7 @@ app.use(cors()); // Defaults to origin: '*'
 
 app.get('/', (req, res) => {
   console.log(`auth microservice`);
-  res.send('Hello World v14!');
+  res.send('Hello World v15!');
 });
 
 const register = new promClient.Registry();
