@@ -71,7 +71,7 @@
       spec:
         containers:
         - name: auth
-          image: index.docker.io/himanshusarma123/auth:v25
+          image: index.docker.io/himanshusarma123/auth:v26
           ports:
           - containerPort: 8000
     strategy:
